@@ -8,6 +8,7 @@ namespace Asteroids
     {
         private static BufferedGraphicsContext _context;
         public static BufferedGraphics Buffer;
+        public static BaseObject[] _objs;
         public static int Width { get; set; }
         public static int Height { get; set; }
         static Game() {}
@@ -19,13 +20,36 @@ namespace Asteroids
             Width = form.ClientSize.Width;
             Height = form.ClientSize.Height;
             Buffer = _context.Allocate(g, new Rectangle(0, 0, Width, Height));
+            Load();
+
+            Timer timer = new Timer { Interval = 100 };
+            timer.Start();
+            timer.Tick += Timer_Tick;
         }
+
+        private static void Timer_Tick(object sender, EventArgs e)
+        {
+            Draw();
+            Update();
+        }
+
         public static void Draw()
         {
             Buffer.Graphics.Clear(Color.Black);
-            Buffer.Graphics.DrawRectangle(Pens.White, new Rectangle(100, 100, 200, 200));
-            Buffer.Graphics.FillRectangle(Brushes.Wheat, new Rectangle(100, 100, 200, 200));
+            foreach (BaseObject obj in _objs)
+                obj.Draw();
             Buffer.Render();
+        }
+        public static void Load()
+        {
+            _objs = new BaseObject[30];
+            for (int i = 0; i < _objs.Length; i++)
+                _objs[i] = new BaseObject(new Point(600, i * 20), new Point(15 - i, 15 - i), new Size(20, 20));
+        }
+        public static void Update()
+        {
+            foreach (BaseObject obj in _objs)
+                obj.Update();
         }
     }
 }
