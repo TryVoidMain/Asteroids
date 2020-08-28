@@ -43,10 +43,12 @@ namespace Asteroids
         public static void Load()
         {
             _objs = new BaseObject[30];
-            for (int i = 0; i < _objs.Length/2; i++)
+            for (int i = 0; i < _objs.Length/3; i++)
                 _objs[i] = new BaseObject(new Point(600, i * 20), new Point(- i, i), new Size(10, 10));
-            for (int i = _objs.Length / 2; i < _objs.Length; i++)
+            for (int i = _objs.Length / 3; i < 2*_objs.Length / 3; i++)
                 _objs[i] = new Star(new Point(600, i * 20), new Point(-i, 0), new Size(5, 5));
+            for (int i = 2*_objs.Length / 3; i < _objs.Length; i++)
+                _objs[i] = new Comet(new Point(600, i * 20), new Point(i, 0), new Size(10, 10));
         }
         public static void Update()
         {
