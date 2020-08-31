@@ -8,15 +8,17 @@ namespace Asteroids
         protected Point Pos;
         protected Point Dir;
         protected Size Size;
+        protected Image img = Image.FromFile("pig-nose.png");
         public BaseObject(Point pos, Point dir, Size size)
         {
             Pos = pos;
             Dir = dir;
-            Size = size;
+            Size = size;            
         }
+
         public virtual void Draw()
         {
-            Game.Buffer.Graphics.DrawEllipse(Pens.White, Pos.X, Pos.Y, Size.Width, Size.Height);
+            Game.Buffer.Graphics.DrawImage(img, new Point(Pos.X, Pos.Y));
         }
         public virtual void Update()
         {
